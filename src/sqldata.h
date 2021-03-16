@@ -3,11 +3,12 @@
 
 #include <QtSql/QSql>
 #include <QtSql/QSqlDatabase>
+#include <QPoint>
 #include <memory>
-class sqlData
+class sqlTomatoRecordData
 {
 public:
-    virtual ~sqlData() = default;
+    virtual ~sqlTomatoRecordData() = default;
 public:
     // 建立一个番茄，返回这个番茄的ID值
     virtual int createTomatoRecord(const QString &detail) = 0;
@@ -17,6 +18,15 @@ public:
     virtual void updateTomatoState(int id, bool isfinish) = 0;
 };
 
-std::unique_ptr<sqlData> createDbMgr();
+class sqlSystemConfigData
+{
+public:
+    virtual ~sqlSystemConfigData() = default;
+public:
+    virtual void setStartPos(const QPoint &pos) = 0;
+    virtual void getStartPos(QPoint &pos) = 0;
+};
+std::unique_ptr<sqlSystemConfigData> createSystemConfig();
+std::unique_ptr<sqlTomatoRecordData> createDbMgr();
 
 #endif // SQLDATA_H

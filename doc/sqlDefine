@@ -1,0 +1,33 @@
+数据表定义
+
+CREATE TABLE clockTable (
+	id 			INTEGER PRIMARY KEY, 	// 唯一标识
+	detail 		varchar NOT NULL, 		// 番茄任务的详细描述
+	normalFin 	BOOLEAN, 				// 是否正常结束番茄
+	cloStart 	DATETIME, 				// 番茄开始的时间
+	cloEnd 		DATETIME, 				// 番茄结束的时间
+	oneStart 	DATETIME, 				// 第一次打扰开始
+	oneEnd 		DATETIME, 				// 第一次打扰结束
+	oneDetail 	varchar,				// 第一次打扰原因
+	twoStart 	DATETIME, 				// 第二次打扰开始
+	twoEnd 		DATETIME, 				// 第二次打扰结束
+	twoDetail 	varchar, 				// 第二次打扰原因
+	thrStart 	DATETIME, 				// 第三次打扰开始
+	thrEnd 		DATETIME, 				// 第三次打扰结束
+	thrDetail 	varchar)  				// 第三次打扰原因
+	
+	
+	
+事务表，记录规划的任务，以及预计需要的番茄数量。
+CREATE TABLE Mission
+	id INTEGER PRIMARY KEY,
+	name varchar NOT NULL,
+	detail varchar NOT NULL,
+	PlanMissionTime DATETIME,					// 规划此项内容的时间
+	PlanFinishTime DATETIME,
+	PlanTomatos INTEGER)						// 计划番茄数量
+
+事物番茄的对应关系表
+CREATE TABLE MissionToTomato
+	tomatoId INTEGER NOT NULL,
+	MissionId INTEGER NOT NULL,

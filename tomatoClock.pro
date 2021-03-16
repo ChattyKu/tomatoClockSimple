@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,19 +25,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        dialogdetail.cpp \
-        main.cpp \
-        mainwindow.cpp \
-        sqldata.cpp
+        src/commdef.cpp \
+        src/dialogdetail.cpp \
+        src/main.cpp \
+        src/mainwindow.cpp \
+        src/sqldata.cpp \
+        src/webserver.cpp
 
 HEADERS += \
-        dialogdetail.h \
-        mainwindow.h \
-        sqldata.h
+        src/commdef.h \
+        src/dialogdetail.h \
+        src/mainwindow.h \
+        src/sqldata.h \
+        src/webserver.h
 
 FORMS += \
-        dialogdetail.ui \
-        mainwindow.ui
+        src/dialogdetail.ui \
+        src/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

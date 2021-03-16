@@ -11,6 +11,8 @@
 #include <QMenu>
 #include <QDateTime>
 
+#include "webserver.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -56,10 +58,17 @@ private:
     bool m_bIsPause; ///< 是否处于被打扰状态
     int m_iPauseTime; ///< 暂停次数
     int m_iPauseSecs; ///< 从暂停开始计数，秒数
-    std::unique_ptr<sqlData> m_pDbMgr; ///< 数据库操作对象
+    std::unique_ptr<sqlTomatoRecordData> m_pDbMgr; ///< 数据库操作对象
+    std::unique_ptr<sqlSystemConfigData> m_pDBSysCfg; ///<
     DialogDetail *m_winDetail; ///< 描述输入对话框
     int m_iCurrentTomatoId; ///< 当前Tomato的ID
     QDateTime m_dtPauseBegin; ///< 当前暂停的开始时间
+
+    std::unique_ptr<WebServer> m_pWebServer;
+
+    // QWidget interface
+protected:
+    void mouseReleaseEvent(QMouseEvent *event);
 };
 
 #endif // MAINWINDOW_H

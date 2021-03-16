@@ -15,7 +15,7 @@ const int g_iMaxPauseSecs = 180; ///< 打扰最长时间 3分钟，超过则时�
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow), m_tcsCur(TCS_NORMAL), m_pDbMgr(createDbMgr()),
-    m_iCurrentTomatoId(-1)
+    m_iCurrentTomatoId(-1), m_pWebServer(new WebServer())
 {
     ui->setupUi(this);
     this->setWindowFlag(Qt::WindowStaysOnTopHint);
@@ -34,6 +34,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(clo, SIGNAL(triggered(void)), this, SLOT(closeWin()));
 
     m_winDetail = new DialogDetail();
+
+    m_pWebServer->run();
+
+    m_pDBSysCfg = createSystemConfig();
+    QPoint pos = {0, 0};
+    m_pDBSysCfg->getStartPos(pos);
+
+    if (pos.x() != 0 || pos.y() != 0) {
+        this->move(pos);
+    }
+
 
 }
 
@@ -203,6 +214,13 @@ void MainWindow::resumeRun()
     m_bIsPause = false;
     m_tcsCur = TCS_RUN;
     ui->pushButton->setText("被打扰(" + QString("%1").arg(m_iPauseTime) + ")");
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() & Qt::LeftButton) {
+        m_pDBSysCfg->setStartPos(this->frameGeometry().topLeft());
+    }
 }
 
 void MainWindow::closeWin()
